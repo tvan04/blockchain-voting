@@ -17,12 +17,12 @@ const io = new Server(server, {
 });
 
 // Create a blockchain instance
-const votingBlockchain = new Blockchain();
+let votingBlockchain = new Blockchain();
 
 // Store users, votes, and rewards
-const users = []; // Array of { name, address, tokens }
-const votes = []; // Array of { name, address, vote }
-const rewards = []; // Array of { name, address, reward, cost, tokens }
+let users = []; // Array of { name, address, tokens }
+let votes = []; // Array of { name, address, vote }
+let rewards = []; // Array of { name, address, reward, cost, tokens }
 
 io.on("connection", (socket) => {
   console.log("A user connected");
