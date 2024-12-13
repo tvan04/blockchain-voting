@@ -1,50 +1,184 @@
-# React + TypeScript + Vite
+# Blockchain Voting System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A decentralized blockchain-based voting system built with React (frontend) and Node.js (backend). This system ensures transparency and integrity while providing privacy-enhanced voting options. The application includes live updates via Socket.IO and features such as token-based rewards for voters.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Real-Time Updates:** Votes and rewards update live using WebSocket connections.
+- **Blockchain-Backed:** Votes are recorded immutably on a blockchain to ensure integrity.
+- **Token Rewards:** Voters earn tokens for participating in elections, which they can redeem for rewards.
+- **Dashboard Overview:** Admins can view participants, votes, rewards, and blockchain details.
+- **User Privacy:** Built with considerations for enhancing voter privacy using cryptographic methods.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Frontend
+- React (React Router for navigation)
+- Vite (for faster development builds)
+
+### Backend
+- Node.js
+- Express.js
+- Socket.IO (for real-time updates)
+
+### Blockchain
+- Custom Blockchain Implementation
+
+### Hosting
+- **Frontend:** Netlify
+- **Backend:** Render (or optionally hosted locally via Ngrok for testing)
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+- Node.js (v14+ recommended)
+- npm or yarn
+- Git
+
+### Installation
+
+#### Clone the Repository
+```bash
+git clone <repository-url>
+cd blockchain-voting-system
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### Install Dependencies
+```bash
+# Install backend dependencies
+cd backend
+npm install
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+# Install frontend dependencies
+cd ../frontend
+npm install
 ```
+
+### Running Locally
+
+#### Start the Backend
+```bash
+cd backend
+node server.js
+```
+
+The backend server will start on `http://localhost:4000`.
+
+#### Start the Frontend
+```bash
+cd frontend
+npm run dev
+```
+
+The frontend development server will start on `http://localhost:5173`.
+
+### Deployment
+
+#### Frontend Deployment (Netlify)
+1. Run the build command:
+   ```bash
+   npm run build
+   ```
+2. Upload the `dist` folder to Netlify.
+3. Add a `_redirects` file to the `dist` folder with the following content:
+   ```
+   /*    /index.html   200
+   ```
+
+#### Backend Deployment (Render)
+1. Create a Web Service on Render.
+2. Set the following settings:
+   - Build Command: Leave empty (unless using TypeScript).
+   - Start Command: `node server.js`.
+3. Ensure the correct environment variables (like `PORT`) are set.
+
+---
+
+## Project Structure
+
+```
+blockchain-voting-system/
+├── server/
+│   ├── server.js          # Main backend server
+│   ├── blockchain.js      # Blockchain implementation
+│   └── package.json       # Backend dependencies
+├── client/
+│   ├── src/
+│   │   ├── components/    # React components (Dashboard, Voting, etc.)
+│   │   ├── App.jsx        # Main application entry point
+│   │   └── main.jsx       # ReactDOM rendering
+│   ├── public/            # Static assets
+│   ├── dist/              # Production build folder (after `npm run build`)
+│   └── package.json       # Frontend dependencies
+└── README.md
+```
+
+---
+
+## API Endpoints
+
+### Backend Routes
+
+#### `GET /checkAddress`
+- **Query Parameters:**
+  - `name` (string) - The name of the user.
+- **Response:**
+  - `200 OK`: Returns the address corresponding to the given name.
+  - `404 Not Found`: If no user matches the given name.
+
+#### WebSocket Events
+
+##### `join`
+- **Description:** Allows a user to join the system by providing their name and address.
+- **Data:**
+  ```json
+  {
+    "name": "string",
+    "address": "string"
+  }
+  ```
+
+##### `vote`
+- **Description:** Records a user's vote and rewards tokens.
+- **Data:**
+  ```json
+  {
+    "name": "string",
+    "address": "string",
+    "vote": "string"
+  }
+  ```
+
+##### `spendTokens`
+- **Description:** Deducts tokens from a user's balance to redeem a reward.
+- **Data:**
+  ```json
+  {
+    "address": "string",
+    "cost": "number",
+    "reward": "string"
+  }
+  ```
+---
+
+## Future Enhancements
+- Integrate Zero-Knowledge Proofs for private voting.
+- Add role-based authentication for admin and users.
+- Improve UI/UX for better accessibility and responsiveness.
+- Add support for multiple elections.
+
+---
+
+## License
+MIT License
+
+---
+
+## Contributors
+- [Tristan Van](https://github.com/tvan04)
