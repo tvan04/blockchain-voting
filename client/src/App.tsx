@@ -4,6 +4,7 @@ import Login from "./components/Login.tsx";
 import Voting from "./components/Voting.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import Rewards from "./components/Rewards.tsx";
+import ResetServer from "./components/ResetServer.tsx";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Route path="/voting" element={<Voting />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/rewards" element={<Rewards />} />
+        <Route path="/reset" element={<ResetServer />} />
       </Routes>
     </Router>
   );

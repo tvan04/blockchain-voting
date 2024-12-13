@@ -4,7 +4,10 @@ const http = require("http");
 const cors = require("cors");
 const { Blockchain, Block } = require("./blockchain.js");
 
+
+
 const app = express();
+app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -104,6 +107,19 @@ io.on("connection", (socket) => {
     } else {
       return res.status(404).json({ error: "No address found for the given name" });
     }
+  });
+
+  // Reset endpoint
+  app.post("/reset", (req, res) => {
+    votingBlockchain = new Blockchain();
+    users = [];
+    votes = [];
+    rewards = [];
+    io.emit("blockchain", votingBlockchain.chain);
+    io.emit("updateUsers", users);
+    io.emit("updateVotes", votes);
+    io.emit("updateRewards", rewards);
+    res.send("Server reset successfully");
   });
 
   socket.on("disconnect", () => {
