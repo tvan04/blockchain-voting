@@ -38,41 +38,41 @@ A decentralized blockchain-based voting system built with React (frontend) and N
 
 ### Prerequisites
 - Node.js (v14+ recommended)
-- npm or yarn
+- npm
 - Git
 
 ### Installation
 
 #### Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/tvan04/blockchain-voting.git
 cd blockchain-voting-system
 ```
 
 #### Install Dependencies
 ```bash
 # Install backend dependencies
-cd backend
+cd server
 npm install
 
 # Install frontend dependencies
-cd ../frontend
+cd ../client
 npm install
 ```
 
-### Running Locally
+### Running Locally (the code is currently set up for deployment, so you will have to change socket link to `http://localhost:4000` in the component files)
 
 #### Start the Backend
 ```bash
-cd backend
-node server.js
+cd server
+node index.js
 ```
 
 The backend server will start on `http://localhost:4000`.
 
 #### Start the Frontend
 ```bash
-cd frontend
+cd client
 npm run dev
 ```
 
@@ -94,9 +94,8 @@ The frontend development server will start on `http://localhost:5173`.
 #### Backend Deployment (Render)
 1. Create a Web Service on Render.
 2. Set the following settings:
-   - Build Command: Leave empty (unless using TypeScript).
+   - Build Command: Leave empty 
    - Start Command: `node server.js`.
-3. Ensure the correct environment variables (like `PORT`) are set.
 
 ---
 
@@ -105,7 +104,7 @@ The frontend development server will start on `http://localhost:5173`.
 ```
 blockchain-voting-system/
 ├── server/
-│   ├── server.js          # Main backend server
+│   ├── index.js          # Main backend server
 │   ├── blockchain.js      # Blockchain implementation
 │   └── package.json       # Backend dependencies
 ├── client/
