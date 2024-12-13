@@ -9,10 +9,12 @@ const Voting: React.FC = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
+  //I tried to use navigate functions, but the dashboard wouldn't refresh properly 
   const handleVote = () => {
     if (vote) {
       socket.emit("vote", { name: user.name, address: user.address, vote });
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
+      //navigate("/dashboard");
     }
   };
   

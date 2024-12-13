@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const socket = io("http://localhost:4000");
 
@@ -19,6 +20,7 @@ const Rewards: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string>("");
   const [userTokens, setUserTokens] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
+  //const navigate = useNavigate();
 
   useEffect(() => {
     // Listen for user updates
@@ -51,6 +53,12 @@ const Rewards: React.FC = () => {
     } else {
       setMessage("You do not have enough tokens to redeem this reward.");
     }
+  };
+  
+  //I tried to use the navigate function from react-router-dom but it wasn't working so I used window.location.href instead
+  const nagivateToDashboard = () => {
+    window.location.href = "/dashboard";
+    //navigate("/dashboard");
   };
 
   return (
@@ -109,6 +117,9 @@ const Rewards: React.FC = () => {
 
       {/* Display Messages */}
       {message && <p style={{ marginTop: "20px", color: "red" }}>{message}</p>}
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <button onClick={nagivateToDashboard}>Go to Dashboard</button>
+</div>
     </div>
   );
 };

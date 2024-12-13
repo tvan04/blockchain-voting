@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const socket = io("http://localhost:4000");
+
 
 interface Vote {
   name: string;
@@ -35,8 +37,11 @@ const Dashboard: React.FC = () => {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [blockchain, setBlockchain] = useState<Block[]>([]);
   const [selectedBlockIndex, setSelectedBlockIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
+
     // Fetch the blockchain from the server
     socket.on("blockchain", (updatedBlockchain: Block[]) => {
       setBlockchain(updatedBlockchain);
@@ -60,7 +65,6 @@ const Dashboard: React.FC = () => {
     socket.on("updateRewards", (updatedRewards: Purchase[]) => {
       setPurchases(updatedRewards);
     });
-
     return () => {
       socket.off("blockchain");
       socket.off("updateUsers");
@@ -72,6 +76,11 @@ const Dashboard: React.FC = () => {
     // Toggle visibility of the block's details
     setSelectedBlockIndex(selectedBlockIndex === index ? null : index);
   };
+  
+  const handleNavigateToRewards = () => {
+    navigate("/rewards");
+    };
+
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
@@ -211,7 +220,12 @@ const Dashboard: React.FC = () => {
           <p><strong>Hash:</strong> {blockchain[selectedBlockIndex].hash}</p>
         </div>
       )}
+
+<div style={{ textAlign: "center", marginTop: "20px" }}>
+        <button onClick={handleNavigateToRewards}>Go to Rewards Page</button>
+</div>
     </div>
+    
   );
 };
 
