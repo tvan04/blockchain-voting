@@ -11,6 +11,7 @@ A decentralized blockchain-based voting system built with React (frontend) and N
 - **Token Rewards:** Voters earn tokens for participating in elections, which they can redeem for rewards.
 - **Dashboard Overview:** Admins can view participants, votes, rewards, and blockchain details.
 - **User Privacy:** Built with considerations for enhancing voter privacy using cryptographic methods.
+- **Resettable State:** Navigate to <URL>/reset to completely reset the blockchain.
 
 ---
 
